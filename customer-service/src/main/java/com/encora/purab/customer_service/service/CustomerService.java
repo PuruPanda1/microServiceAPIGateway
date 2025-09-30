@@ -4,6 +4,7 @@ import com.encora.purab.customer_service.dto.AddressRequest;
 import com.encora.purab.customer_service.dto.CustomerRequest;
 import com.encora.purab.customer_service.entity.Address;
 import com.encora.purab.customer_service.entity.Customer;
+import com.encora.purab.customer_service.exception.ResourceNotFoundException;
 import com.encora.purab.customer_service.repository.CustomerRepository;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,9 @@ public class CustomerService {
     public ResponseEntity<Customer> getCustomerById(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent())
-        return new ResponseEntity(customer.get(), HttpStatus.OK);
-        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(customer.get(), HttpStatus.OK);
+
+        throw new ResourceNotFoundException("Customer does not exist");
     }
 
     public ResponseEntity<Customer> createCustomer(CustomerRequest customerRequest) {
