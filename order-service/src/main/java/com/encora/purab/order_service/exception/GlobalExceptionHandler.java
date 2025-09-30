@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("erorr", "Empty order not allowed");
+        body.put("error", "Empty order not allowed");
         body.put("message", ex.getMessage());
         body.put("path", request.getDescription(false));
 
