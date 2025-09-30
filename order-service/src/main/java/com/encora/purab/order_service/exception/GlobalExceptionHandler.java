@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmptyOrderException.class)
-    public ResponseEntity<Object> handleEmptyOrderException(ResourceNotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEmptyOrderException(EmptyOrderException ex, WebRequest request) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
