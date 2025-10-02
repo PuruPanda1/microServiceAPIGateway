@@ -31,7 +31,7 @@ public class OrderService {
         throw new ResourceNotFoundException("Order does not exist");
     }
 
-    public ResponseEntity<Order> createOrder(OrderRequest orderRequest){
+    public ResponseEntity<Long> createOrder(OrderRequest orderRequest){
         Order order = new Order();
         order.setCustomerId(orderRequest.getCustomerId());
 
@@ -47,6 +47,6 @@ public class OrderService {
 
         orderRepository.save(order);
         order.getOrderTotal();
-        return new ResponseEntity(order, HttpStatus.OK);
+        return new ResponseEntity(order.getOrderId(), HttpStatus.OK);
     }
 }

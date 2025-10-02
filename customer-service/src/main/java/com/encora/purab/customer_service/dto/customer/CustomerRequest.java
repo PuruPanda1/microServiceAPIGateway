@@ -1,4 +1,4 @@
-package com.encora.purab.customer_service.dto;
+package com.encora.purab.customer_service.dto.customer;
 
 import lombok.Data;
 

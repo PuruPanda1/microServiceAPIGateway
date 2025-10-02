@@ -1,12 +1,11 @@
 package com.encora.purab.customer_service.service;
 
-import com.encora.purab.customer_service.dto.AddressRequest;
-import com.encora.purab.customer_service.dto.CustomerRequest;
+import com.encora.purab.customer_service.dto.customer.AddressRequest;
+import com.encora.purab.customer_service.dto.customer.CustomerRequest;
 import com.encora.purab.customer_service.entity.Address;
 import com.encora.purab.customer_service.entity.Customer;
 import com.encora.purab.customer_service.exception.ResourceNotFoundException;
 import com.encora.purab.customer_service.repository.CustomerRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -27,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<Long> createOrder(@RequestBody OrderRequest orderRequest){
         if(orderRequest.getOrderItemList().isEmpty()){
             throw new EmptyOrderException("Order without order items is not allowed");
         }
