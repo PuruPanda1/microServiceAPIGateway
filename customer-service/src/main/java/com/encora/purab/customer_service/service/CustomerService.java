@@ -31,6 +31,14 @@ public class CustomerService {
         throw new ResourceNotFoundException("Customer does not exist");
     }
 
+    public ResponseEntity<Void> verifyCustomerById(Long id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isPresent())
+            return new ResponseEntity(HttpStatus.OK);
+
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
     public ResponseEntity<Customer> createCustomer(CustomerRequest customerRequest) {
 
         Customer customer = new Customer();

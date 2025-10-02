@@ -34,6 +34,11 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
+    @GetMapping("verify/{id}")
+    public ResponseEntity<Void> verifyCustomerById(@PathVariable Long id){
+        return customerService.verifyCustomerById(id);
+    }
+
     @PostMapping("")
     public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequest customerRequest){
         return customerService.createCustomer(customerRequest);

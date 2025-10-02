@@ -1,3 +1,8 @@
+# Issues Faced
+
+## Product Variant Issue (Fixed)
+- We have to use product + variant ids in orderItem to properly set the order for different variants of a single product
+
 # Product Variant Logic/ Rules
 
 ## Product must have 1+ variants
@@ -25,14 +30,18 @@
     "customerId": 2,
     "orderItemList": [
         {
-            "productId": 101,
-            "productPrice": 1000.0,
+            "productId": 3,
+            "variantId": 1,
+            "productQuantity": 1,
+            "productPrice": 2500.0,
             "discountAmount": 500.0
         },
         {
-            "productId": 103,
-            "productPrice": 1500.0,
-            "discountAmount": 200.0
+            "productId": 3,
+            "variantId": 2,
+            "productQuantity": 1,
+            "productPrice": 2500.0,
+            "discountAmount": 500.0
         }
     ]
 }
