@@ -10,7 +10,7 @@
         <module name="apigateway" />
         <module name="eureka-server" />
       </profile>
-      <profile name="Annotation profile for customer-service" enabled="true">
+      <profile name="Annotation profile for product-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,15 +18,25 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
         </processorPath>
-        <module name="customer-service" />
         <module name="product-service" />
+        <module name="customer-service" />
         <module name="order-service" />
+      </profile>
+      <profile name="Annotation profile for authentication-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
+        </processorPath>
+        <module name="authentication-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="apigateway" options="-parameters" />
+      <module name="authentication-service" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="order-service" options="-parameters" />
