@@ -17,7 +17,7 @@ import java.util.Map;
 public class JwtService {
     public static final String SECRET = "614518006fd378020efda5ae0707029f90a802de58f7f9abd7a0c8d3f096d31f";
 
-    public String generateToken(String userName){
+    public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userName);
     }
@@ -36,7 +36,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public void validateToken(final String token){
+    public void validateToken(final String token) {
         Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
     }
 }

@@ -17,18 +17,18 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("")
-    public ResponseEntity<List<Order>> getAllOrders(){
+    public ResponseEntity<List<Order>> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId){
+    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId) {
         return orderService.getOrderById(orderId);
     }
 
     @PostMapping("")
-    public ResponseEntity<Long> createOrder(@RequestBody OrderRequest orderRequest){
-        if(orderRequest.getOrderItemList().isEmpty()){
+    public ResponseEntity<Long> createOrder(@RequestBody OrderRequest orderRequest) {
+        if (orderRequest.getOrderItemList().isEmpty()) {
             throw new EmptyOrderException("Order without order items is not allowed");
         }
         return orderService.createOrder(orderRequest);

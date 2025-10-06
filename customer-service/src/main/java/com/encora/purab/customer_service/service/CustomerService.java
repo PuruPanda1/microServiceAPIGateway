@@ -19,13 +19,13 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public ResponseEntity<List<Customer>> getAllCustomers(){
+    public ResponseEntity<List<Customer>> getAllCustomers() {
         return new ResponseEntity(customerRepository.findAll(), HttpStatus.OK);
     }
 
     public ResponseEntity<Customer> getCustomerById(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
-        if(customer.isPresent())
+        if (customer.isPresent())
             return new ResponseEntity(customer.get(), HttpStatus.OK);
 
         throw new ResourceNotFoundException("Customer does not exist");
@@ -33,7 +33,7 @@ public class CustomerService {
 
     public ResponseEntity<Void> verifyCustomerById(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
-        if(customer.isPresent())
+        if (customer.isPresent())
             return new ResponseEntity(HttpStatus.OK);
 
         return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -46,7 +46,7 @@ public class CustomerService {
         customer.setLastName(customerRequest.getLastName());
         customer.setEmail(customerRequest.getEmail());
 
-        if(customerRequest.getAddresses() != null){
+        if (customerRequest.getAddresses() != null) {
             for (AddressRequest addressRequest : customerRequest.getAddresses()) {
                 Address address = new Address();
                 address.setAddressLine1(addressRequest.getAddressLine1());
@@ -62,7 +62,7 @@ public class CustomerService {
         }
 
         Customer savedCustomer = customerRepository.save(customer);
-        if(savedCustomer == null){
+        if (savedCustomer == null) {
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(savedCustomer, HttpStatus.OK);

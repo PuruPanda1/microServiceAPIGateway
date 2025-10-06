@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("AUTHENTICATION-SERVICE")
 public interface AuthenticationInterface {
     @GetMapping("/validate")
-    public void validate(@RequestParam String token);
+    void validate(@RequestParam String token);
 }

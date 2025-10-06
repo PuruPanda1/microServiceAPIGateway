@@ -27,9 +27,9 @@ public class Product {
     @Transient
     private int stock;
 
-    public int getStock(){
+    public int getStock() {
         int stock = 0;
-        for(ProductVariant productVariant : productVariantList){
+        for (ProductVariant productVariant : productVariantList) {
             stock += productVariant.getStock();
         }
         this.stock = stock;

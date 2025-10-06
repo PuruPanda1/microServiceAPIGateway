@@ -10,13 +10,13 @@ import java.util.function.Predicate;
 public class RouteValidator {
 
     public static final List<String> openApiEndPoints = List.of(
-      "/s"
+            "/s"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
             serverHttpRequest ->
                     openApiEndPoints
-                    .stream()
-                    .noneMatch(uri->serverHttpRequest.getURI().getPath().contains(uri));
+                            .stream()
+                            .noneMatch(uri -> serverHttpRequest.getURI().getPath().contains(uri));
 
 }

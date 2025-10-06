@@ -52,7 +52,7 @@ public class OrderService {
 
         for (OrderItemRequest orderItemRequest : orderItemList) {
             Boolean isProductAvailable = productInterface.isProductAvailable(orderItemRequest.getProductId(), orderItemRequest.getVariantId(), orderItemRequest.getProductQuantity()).getBody();
-            if(!isProductAvailable){
+            if (!isProductAvailable) {
                 throw new InvalidOrderRequestException("Product out of Stock");
             }
         }

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("CUSTOMER-SERVICE")
 public interface CustomerInterface {
     @GetMapping("customers/verify/{id}")
-    public ResponseEntity<Void> verifyCustomerById(@PathVariable Long id);
+    ResponseEntity<Void> verifyCustomerById(@PathVariable Long id);
 }

@@ -6,12 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 @FeignClient("ORDER-SERVICE")
 public interface OrderInterface {
 
     @PostMapping("orders")
-    public ResponseEntity<Long> createOrder(@RequestBody OrderRequest orderRequest);
+    ResponseEntity<Long> createOrder(@RequestBody OrderRequest orderRequest);
 
 }

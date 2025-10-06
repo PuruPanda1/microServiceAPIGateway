@@ -24,8 +24,8 @@ public class OrderItem {
     @Transient
     private double finalPrice;
 
-    public double getFinalPrice(){
-        if((productPrice - discountAmount) <= 0)
+    public double getFinalPrice() {
+        if ((productPrice - discountAmount) <= 0)
             throw new ArithmeticException("Discount amount can not be greater or equal to the product price");
         this.finalPrice = (productPrice - discountAmount);
         return finalPrice;

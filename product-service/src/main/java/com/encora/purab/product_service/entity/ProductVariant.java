@@ -27,7 +27,7 @@ public class ProductVariant {
     @Transient
     private double discount;
 
-    public double getDiscount(){
+    public double getDiscount() {
         return (usualPrice - salePrice);
     }
 

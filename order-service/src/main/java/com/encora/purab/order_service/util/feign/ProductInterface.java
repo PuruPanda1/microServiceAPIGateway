@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("PRODUCT-SERVICE")
 public interface ProductInterface {
     @GetMapping("products/available/{productId}/{variantId}")
-    public ResponseEntity<Boolean> isProductAvailable(@PathVariable Long productId, @PathVariable Long variantId, @RequestParam("requiredQuantity") Integer requiredQuantity);
+    ResponseEntity<Boolean> isProductAvailable(@PathVariable Long productId, @PathVariable Long variantId, @RequestParam("requiredQuantity") Integer requiredQuantity);
 
     @PostMapping("products/decrease-quantity/{productId}/{variantId}")
     ResponseEntity<Void> decreaseProductStock(@PathVariable Long productId, @PathVariable Long variantId, @RequestParam("quantity") Integer quantity);

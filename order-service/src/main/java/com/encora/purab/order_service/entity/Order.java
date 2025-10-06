@@ -37,9 +37,9 @@ public class Order {
     @Transient
     private double orderTotal;
 
-    public double getOrderTotal(){
+    public double getOrderTotal() {
         double total = 0;
-        for(OrderItem orderItem : orderItems){
+        for (OrderItem orderItem : orderItems) {
             total += orderItem.getFinalPrice();
         }
         this.orderTotal = total;

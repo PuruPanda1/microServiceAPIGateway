@@ -6,7 +6,6 @@ import com.encora.purab.customer_service.dto.order.OrderResponse;
 import com.encora.purab.customer_service.entity.Customer;
 import com.encora.purab.customer_service.service.CustomerService;
 import com.encora.purab.customer_service.util.feign.OrderInterface;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,28 +24,28 @@ public class CustomerController {
     private OrderInterface orderInterface;
 
     @GetMapping("")
-    public ResponseEntity<List<Customer>> getAllCustomers(){
+    public ResponseEntity<List<Customer>> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id){
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         return customerService.getCustomerById(id);
     }
 
     @GetMapping("verify/{id}")
-    public ResponseEntity<Void> verifyCustomerById(@PathVariable Long id){
+    public ResponseEntity<Void> verifyCustomerById(@PathVariable Long id) {
         return customerService.verifyCustomerById(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequest customerRequest){
+    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequest customerRequest) {
         return customerService.createCustomer(customerRequest);
     }
 
-//    order creation for the user! -- returns the orderId
+    //    order creation for the user! -- returns the orderId
     @PostMapping("/create/order")
-    public ResponseEntity<OrderResponse> createOrderForCustomer(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<OrderResponse> createOrderForCustomer(@RequestBody OrderRequest orderRequest) {
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setOrderId(orderInterface.createOrder(orderRequest).getBody());
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);

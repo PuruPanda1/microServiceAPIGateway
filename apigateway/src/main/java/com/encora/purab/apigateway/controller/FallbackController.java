@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 @RestController
 public class FallbackController {
     @GetMapping("fallback/orders")
-    public Mono<String> orderServiceFailed(){
+    public Mono<String> orderServiceFailed() {
         return Mono.just("Service unavailable");
     }
 

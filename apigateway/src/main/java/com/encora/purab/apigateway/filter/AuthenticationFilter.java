@@ -1,11 +1,9 @@
 package com.encora.purab.apigateway.filter;
 
 import com.encora.purab.apigateway.exception.UnAuthorised;
-import com.encora.purab.apigateway.util.feign.AuthenticationInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -28,13 +26,13 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 }
 
                 String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-                if(authHeader!=null && authHeader.startsWith("Bearer ")){
+                if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     authHeader = authHeader.substring(7);
                 }
-                try{
+                try {
                     System.out.println("Trying authentication");
 //                    authenticationInterface.validate(authHeader);
-                }catch (Exception e){
+                } catch (Exception e) {
                     throw new UnAuthorised("Unauthorised Access!");
                 }
             }

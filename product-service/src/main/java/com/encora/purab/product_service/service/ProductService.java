@@ -23,13 +23,13 @@ public class ProductService {
     @Autowired
     ProductVariantRepository productVariantRepository;
 
-    public ResponseEntity<List<Product>> getAllProducts(){
+    public ResponseEntity<List<Product>> getAllProducts() {
         return new ResponseEntity(productRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Product> getProductById(Long productId){
+    public ResponseEntity<Product> getProductById(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
-        if(product.isPresent())
+        if (product.isPresent())
             return new ResponseEntity(product, HttpStatus.OK);
         throw new ResourceNotFoundException("Product does not exist");
     }
@@ -39,7 +39,7 @@ public class ProductService {
         product.setProductName(productRequest.getProductName());
         product.setProductDescription(productRequest.getProductDescription());
 
-        for(ProductVariantRequest productVariantRequest : productRequest.getProductVariantRequestList()){
+        for (ProductVariantRequest productVariantRequest : productRequest.getProductVariantRequestList()) {
             ProductVariant productVariant = new ProductVariant();
             productVariant.setSize(productVariantRequest.getSize());
             productVariant.setColor(productVariantRequest.getColor());
@@ -55,12 +55,12 @@ public class ProductService {
         return new ResponseEntity(product, HttpStatus.OK);
     }
 
-    public ResponseEntity<Boolean> isProductAvailable(Long productId, Long variantId, Integer requiredQuantity){
+    public ResponseEntity<Boolean> isProductAvailable(Long productId, Long variantId, Integer requiredQuantity) {
         Optional<ProductVariant> productVariantOptional = productVariantRepository.getProductVariant(productId, variantId);
-        if(productVariantOptional.isPresent())
-            if(productVariantOptional.get().getStock() >= requiredQuantity){
+        if (productVariantOptional.isPresent())
+            if (productVariantOptional.get().getStock() >= requiredQuantity) {
                 return new ResponseEntity(true, HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity(false, HttpStatus.OK);
             }
         throw new ResourceNotFoundException("Product or variant does not exist");
@@ -69,7 +69,7 @@ public class ProductService {
     public ResponseEntity<Void> decreaseProductStock(Long productId, Long variantId, Integer quantity) {
 //        get product variant by productId and variantId
         Optional<ProductVariant> productVariantOptional = productVariantRepository.getProductVariant(productId, variantId);
-        if(!productVariantOptional.isPresent()){
+        if (!productVariantOptional.isPresent()) {
             throw new ResourceNotFoundException("Product or variant does not exist");
         }
 

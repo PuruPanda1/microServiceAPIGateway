@@ -4,7 +4,6 @@ import com.encora.purab.authentication_service.dto.AuthRequest;
 import com.encora.purab.authentication_service.entity.UserCredential;
 import com.encora.purab.authentication_service.exception.InvalidUserCredentials;
 import com.encora.purab.authentication_service.repository.UserCredentialRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,20 +25,20 @@ public class AuthenticationService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public String register(UserCredential userCredential){
+    public String register(UserCredential userCredential) {
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
         userCredentialRepository.save(userCredential);
         return "User is registered";
     }
 
-    public String generateToken(AuthRequest authRequest){
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword()));
-        if(authenticate.isAuthenticated())
+    public String generateToken(AuthRequest authRequest) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        if (authenticate.isAuthenticated())
             return jwtService.generateToken(authRequest.getUsername());
         throw new InvalidUserCredentials("User or password does not match");
     }
 
-    public void validateToken(String token){
+    public void validateToken(String token) {
         jwtService.validateToken(token);
     }
 
