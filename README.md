@@ -4,7 +4,7 @@ This project demonstrates a Java Spring Boot microservices architecture with ser
 
 ## Architecture Diagram
 
-![Microservices Architecture](./assets/micro_services_architecture.png)
+![Microservices Architecture](./assets/micro_services_architecture.svg)
 
 ## Micro-Services
 
