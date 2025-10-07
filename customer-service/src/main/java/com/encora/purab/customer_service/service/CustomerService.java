@@ -39,7 +39,15 @@ public class CustomerService {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<Customer> createCustomer(CustomerRequest customerRequest) {
+    public ResponseEntity<Long> getCustomerIdByEmail(String email) {
+        Optional<Long> customerId = customerRepository.findCustomerIdByEmail(email);
+        if (customerId.isPresent())
+            return new ResponseEntity(customerId.get(), HttpStatus.OK);
+
+        throw new ResourceNotFoundException("Customer does not exist");
+    }
+
+    public ResponseEntity<Void> createCustomer(CustomerRequest customerRequest) {
 
         Customer customer = new Customer();
         customer.setFirstName(customerRequest.getFirstName());
@@ -61,11 +69,8 @@ public class CustomerService {
             }
         }
 
-        Customer savedCustomer = customerRepository.save(customer);
-        if (savedCustomer == null) {
-            return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity(savedCustomer, HttpStatus.OK);
+        customerRepository.save(customer);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

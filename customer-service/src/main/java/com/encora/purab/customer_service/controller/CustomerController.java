@@ -38,8 +38,13 @@ public class CustomerController {
         return customerService.verifyCustomerById(id);
     }
 
+    @GetMapping("/customer_id")
+    public ResponseEntity<Long> getCustomerIdByEmail(@RequestParam String email) {
+        return customerService.getCustomerIdByEmail(email);
+    }
+
     @PostMapping("")
-    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequest customerRequest) {
+    public ResponseEntity<Void> createCustomer(@RequestBody CustomerRequest customerRequest) {
         return customerService.createCustomer(customerRequest);
     }
 
