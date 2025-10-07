@@ -35,18 +35,18 @@ public class AuthenticationService {
     CustomerInterface customerInterface;
 
     public String register(UserCredential userCredential) {
-//        TODO check whether customer with same email exists in the db
-        ResponseEntity<Long> customerId = customerInterface.getCustomerIdByEmail(userCredential.getEmail());
-        if(customerId.getStatusCode() == HttpStatus.OK){
+        ResponseEntity<Long> isCustomerAvailable = customerInterface.getCustomerIdByEmail(userCredential.getEmail());
+        if(isCustomerAvailable.getStatusCode() == HttpStatus.OK){
             throw new UserAlreadyExistsException("User with provided already exits!");
         }
 
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
-        userCredentialRepository.save(userCredential);
-//        TODO call the customerController using FEIGN-CLIENT to add a new customer with basic details
-        ResponseEntity<Void> response = customerInterface.createCustomer(new CustomerRequest(userCredential.getUsername(), "", userCredential.getEmail()));
+        UserCredential savedUserCredential = userCredentialRepository.save(userCredential);
 
-        if(response.getStatusCode() != HttpStatus.OK){
+        ResponseEntity<Void> isCustomerCreated = customerInterface.createCustomer(new CustomerRequest(userCredential.getUsername(), "", userCredential.getEmail()));
+
+        if(isCustomerCreated.getStatusCode() != HttpStatus.OK){
+            userCredentialRepository.delete(savedUserCredential);
             throw new ServerIssueException("Not able to register the customer");
         }
 
