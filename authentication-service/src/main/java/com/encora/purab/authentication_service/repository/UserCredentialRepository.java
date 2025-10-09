@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserCredentialRepository extends JpaRepository<UserCredential, Long> {
-    @Query("SELECT u FROM UserCredential u WHERE u.username=:username")
-    Optional<UserCredential> findByUserName(String username);
+    @Query("SELECT u FROM UserCredential u WHERE u.email=:email")
+    Optional<UserCredential> findByUserName(String email);
 }

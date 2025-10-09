@@ -12,7 +12,6 @@ public class UserCredential {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
     private String email; // User Credential email == Customer email
     private String password;
 }

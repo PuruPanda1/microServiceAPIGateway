@@ -4,6 +4,7 @@ import com.encora.purab.authentication_service.dto.AuthRequest;
 import com.encora.purab.authentication_service.entity.UserCredential;
 import com.encora.purab.authentication_service.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @GetMapping("/validate")
-    public void validate(@RequestParam String token) {
-        authenticationService.validateToken(token);
+    public ResponseEntity<Long> validate(@RequestParam String token) {
+        return authenticationService.validateToken(token);
     }
 }

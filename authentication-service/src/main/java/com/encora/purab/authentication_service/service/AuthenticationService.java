@@ -8,6 +8,7 @@ import com.encora.purab.authentication_service.exception.ServerIssueException;
 import com.encora.purab.authentication_service.exception.UserAlreadyExistsException;
 import com.encora.purab.authentication_service.repository.UserCredentialRepository;
 import com.encora.purab.authentication_service.util.feign.CustomerInterface;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,34 +36,47 @@ public class AuthenticationService {
     CustomerInterface customerInterface;
 
     public String register(UserCredential userCredential) {
-        ResponseEntity<Long> isCustomerAvailable = customerInterface.getCustomerIdByEmail(userCredential.getEmail());
-        if(isCustomerAvailable.getStatusCode() == HttpStatus.OK){
-            throw new UserAlreadyExistsException("User with provided already exits!");
+
+        try {
+            ResponseEntity<Long> isCustomerAvailable = customerInterface.getCustomerIdByEmail(userCredential.getEmail());
+            if (isCustomerAvailable.getStatusCode() == HttpStatus.OK) {
+                throw new UserAlreadyExistsException("User with provided email already exists!");
+            }
+        } catch (FeignException.NotFound ex) {
+            createCustomer(userCredential);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
+        return "User is registered";
+
+    }
+
+    private void createCustomer(UserCredential userCredential) {
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
         UserCredential savedUserCredential = userCredentialRepository.save(userCredential);
 
-        ResponseEntity<Void> isCustomerCreated = customerInterface.createCustomer(new CustomerRequest(userCredential.getUsername(), "", userCredential.getEmail()));
+//      TODO TEMP FIX sets the customer first name as email which can be later changed in profile
+        ResponseEntity<Void> isCustomerCreated = customerInterface.createCustomer(new CustomerRequest(userCredential.getEmail(), "", userCredential.getEmail()));
 
         if(isCustomerCreated.getStatusCode() != HttpStatus.OK){
             userCredentialRepository.delete(savedUserCredential);
             throw new ServerIssueException("Not able to register the customer");
         }
-
-        return "User is registered";
     }
 
     public String generateToken(AuthRequest authRequest) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         if (authenticate.isAuthenticated())
-            return jwtService.generateToken(authRequest.getUsername());
+            return jwtService.generateToken(authRequest.getEmail());
         throw new InvalidUserCredentials("User or password does not match");
     }
 
-//    TODO the function will return the customerId of the customer with the given auth token
-    public void validateToken(String token) {
-        jwtService.validateToken(token);
+    public ResponseEntity<Long> validateToken(String token) {
+        String email = jwtService.validateTokenAndReturnEmail(token);
+        ResponseEntity<Long> customerId = customerInterface.getCustomerIdByEmail(email);
+        return customerId;
     }
 
 }

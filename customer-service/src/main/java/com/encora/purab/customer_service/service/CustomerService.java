@@ -44,7 +44,7 @@ public class CustomerService {
         if (customerId.isPresent())
             return new ResponseEntity(customerId.get(), HttpStatus.OK);
 
-        throw new ResourceNotFoundException("Customer does not exist");
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<Void> createCustomer(CustomerRequest customerRequest) {
